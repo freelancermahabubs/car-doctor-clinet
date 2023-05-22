@@ -3,11 +3,16 @@ import ServiceCard from "./ServiceCard";
 
 const Services = () => {
   const [services, setServices] = useState([]);
+  const [asc, setAsc] = useState(true);
   useEffect(() => {
-    fetch("https://car-doctor-server-mu-five.vercel.app/services")
+    fetch(
+      `https://car-doctor-server-mu-five.vercel.app/services?sort=${
+        asc ? "asc" : "desc"
+      }`
+    )
       .then((res) => res.json())
       .then((data) => setServices(data));
-  }, []);
+  }, [asc]);
   return (
     <div className="mt-4">
       <div className="text-center space-y-3">
@@ -18,6 +23,9 @@ const Services = () => {
           humour, or randomised <br /> words which dont look even slightly
           believable.
         </p>
+        <button onClick={() => setAsc(!asc)} className="btn btn-primary">
+          {asc ? "Price High to Low" : "Price Low To high"}
+        </button>
       </div>
       <div className="grid my-4 lg:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-6">
         {services.map((service) => (
